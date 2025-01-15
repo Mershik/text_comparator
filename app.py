@@ -18,4 +18,7 @@ def home():
     return render_template("index.html", result=result)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True)git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/<your-username>/<repo-name>.git
+git push -u origin main
