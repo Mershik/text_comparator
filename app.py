@@ -1,21 +1,58 @@
-from flask import Flask, request, render_template
-from text_comparator import compare_texts
+from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+# HTML-шаблон с кнопкой и всплывающим сообщением
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>БУ!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        button {
+            font-size: 24px;
+            padding: 20px 40px;
+            background-color: #ff4747;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        button:active {
+            background-color: #e63e3e;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="showMessage()">БУ!</button>
+
+    <script>
+        function showMessage() {
+            alert("Саня, испугался? Не бойся, я друг, я тебя не обижу. Иди сюда, иди ко мне, сядь рядом со мной, посмотри мне в глаза. Ты видишь меня? Я тоже тебя вижу. Давай смотреть друг на друга до тех пор, пока наши глаза не устанут. Ты не хочешь? Почему? Что-то не так?");
+        }
+    </script>
+</body>
+</html>
+"""
+
+@app.route("/")
 def home():
-    result = None
-    if request.method == "POST":
-        file1 = request.files["file1"]
-        file2 = request.files["file2"]
-
-        file1.save("file1.txt")
-        file2.save("file2.txt")
-
-        result = compare_texts("file1.txt", "file2.txt")
-       
-    return render_template("index.html", result=result)
+    return render_template_string(HTML_TEMPLATE)
 
 if __name__ == "__main__":
     app.run(debug=True)
